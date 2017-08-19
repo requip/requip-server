@@ -1,0 +1,13 @@
+{
+  "name": "requip-server",
+  "version": "0.0.1",
+  "description": "Remote (online) EQUIP-like GUI for QuarkNet Detectors - Server",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/requip/requip-server"
+  },
+  "author": "nermolov",
+  "license": "MIT",
+  "dependencies": {
+  }
+}
