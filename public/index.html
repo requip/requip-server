@@ -13,11 +13,25 @@
   <link rel="import" href="paper-icon-button/paper-icon-button.html">
   <link rel="import" href="iron-icons/iron-icons.html">
   <link rel="import" href="paper-listbox/paper-listbox.html">
+  <link rel="import" href="paper-styles/shadow.html">
+  <link rel="import" href="paper-styles/color.html">
+  <link rel="import" href="paper-input/paper-input.html">
+  <link rel="import" href="paper-button/paper-button.html">
   <!-- load css -->
   <link rel="stylesheet" type="text/css" href="index.css" />
   <link rel="stylesheet" type="text/css" href="normalize.css" />
+  <custom-style>
+    <style is="custom-style">
+      .shadow-2dp { @apply --shadow-elevation-2dp; }
+      .shadow-3dp { @apply --shadow-elevation-3dp; }
+      .shadow-4dp { @apply --shadow-elevation-4dp; }
+      .shadow-6dp { @apply --shadow-elevation-6dp; }
+      .shadow-8dp { @apply --shadow-elevation-8dp; }
+      .shadow-12dp { @apply --shadow-elevation-12dp; }
+      .shadow-16dp { @apply --shadow-elevation-16dp; }
+    </style>
+  </custom-style>
 
-  <link rel="import" href="app-layout/demo/sample-content.html">
 </head>
 <body>
   <app-header shadow>
@@ -29,8 +43,6 @@
     <paper-tabs selected="0" scrollable>
       <paper-tab>Controls</paper-tab>
       <paper-tab>Analysis</paper-tab>
-      <!-- <paper-tab>The third tab</paper-tab>
-      <paper-tab>Fourth tab</paper-tab> -->
     </paper-tabs>
   </app-header>
   <app-drawer id="drawer" swipe-open>
@@ -43,15 +55,19 @@
       </paper-item>
     </paper-listbox>
   </app-drawer>
-  <div id="m-contain">
+  <div class="m-contain">
     <div class="control-contain">
-      <div>ayy</div>
-      <div class="vert-div"></div>
-      <div>
-        <div class="data-log">asdjhasdjhadskl</div>
+      <div class="col">
+        <div class="cmd-send">
+          <paper-input always-float-label label="Send command"></paper-input>
+          <paper-button raised class="indigo"><iron-icon icon="send"></iron-icon></paper-button>
+        </div>
+      </div>
+      <div class="vert-div col"></div>
+      <div class="col shadow shadow-2dp">
+        <div class="data-log"><pre>Waiting...</pre></div>
       </div>
     </div>
   </div>
-  <!-- <sample-content size="10"></sample-content> -->
 </body>
 </html>
