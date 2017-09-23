@@ -1,20 +1,20 @@
-var app = require('http').createServer(handler)
-var io = require('socket.io')(app)
+const express = require('express')
+const app = express()
+const server = require('http').Server(app)
+const io = require('socket.io')(server)
 
 var port = 8080
-app.listen(port)
+server.listen(port)
 console.log('> Listening on port ' + port)
 
-function handler (req, res) {
-  res.writeHead(404)
-  res.end('404 - No main page on RPi client.')
-}
+app.use(express.static('public'))
+app.use(express.static('bower_components'))
 
 // socket.emit('news', { hello: 'world' })
-io.on('connection', function (socket) {
+io.on('connection', (socket) => {
   // initialazation section
   var connType
-  socket.on('connType', function (data) {
+  socket.on('connType', (data) => {
     connType = data
     if (data === 'rpi-client') {
       console.log('> RPi connected')
@@ -24,7 +24,7 @@ io.on('connection', function (socket) {
   })
 
   // RPi client section
-  socket.on('serial-recv', function (data) {
+  socket.on('serial-recv', (data) => {
     console.log('> Data recv:')
     console.log(data)
   })
