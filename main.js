@@ -25,11 +25,13 @@ io.on('connection', (socket) => {
 
   // RPi client section
   socket.on('serial-recv', (data) => {
-    console.log('> Data recv:')
-    console.log(data)
+    console.log('> Data recv')
+    io.emit('web-serial-recv', data)
   })
   function sendData (data) {
-    socket.emit('serial-write', data)
+    io.emit('serial-write', data)
   }
-  sendData('H1\r')
+
+  // Web client section
+  socket.on('web-serial-send', sendData)
 })

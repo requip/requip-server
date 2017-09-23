@@ -29,6 +29,11 @@
       .shadow-8dp { @apply --shadow-elevation-8dp; }
       .shadow-12dp { @apply --shadow-elevation-12dp; }
       .shadow-16dp { @apply --shadow-elevation-16dp; }
+      paper-input.uppercase2 {
+       --paper-input-container-input: {
+          text-transform:uppercase;
+        }
+      }
     </style>
   </custom-style>
 
@@ -36,7 +41,7 @@
 <body>
   <app-header shadow>
     <app-toolbar>
-      <paper-icon-button icon="menu" onclick="drawer.toggle()"></paper-icon-button>
+      <!-- <paper-icon-button icon="menu" onclick="drawer.toggle()"></paper-icon-button> -->
       <div main-title>rEQUIP</div>
       <paper-icon-button icon="help-outline"></paper-icon-button>
     </app-toolbar>
@@ -45,7 +50,7 @@
       <paper-tab>Analysis</paper-tab>
     </paper-tabs>
   </app-header>
-  <app-drawer id="drawer" swipe-open>
+  <!-- <app-drawer id="drawer" swipe-open>
     <paper-listbox>
       <paper-item name="home">
         <a href="#/home" name="name">Home</a>
@@ -54,20 +59,22 @@
         <a href="#/favorites" name="name">Favorites</a>
       </paper-item>
     </paper-listbox>
-  </app-drawer>
+  </app-drawer> -->
   <div class="m-contain">
     <div class="control-contain">
       <div class="col">
         <div class="cmd-send">
-          <paper-input always-float-label label="Send command"></paper-input>
+          <paper-input always-float-label label="Send command" class="uppercase2"></paper-input>
           <paper-button raised class="indigo"><iron-icon icon="send"></iron-icon></paper-button>
         </div>
       </div>
       <div class="vert-div col"></div>
       <div class="col shadow shadow-2dp">
-        <div class="data-log"><pre>Waiting...</pre></div>
+        <div class="data-log"><pre></pre></div>
       </div>
     </div>
   </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="text/javascript" src="index.js"></script>
 </body>
 </html>
