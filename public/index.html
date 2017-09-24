@@ -67,6 +67,17 @@
     <div class="control-contain">
       <div class="col">
         <div class="shadow shadow-2dp trigger-box">
+          <div class="control-title">Scalars (DS)</div>
+          <div class="scalars-grid">
+            <div class="scalars-indicator">Chan. 0:<br /><span id="ds-0" class="scalars-num">0</span></div>
+            <div class="scalars-indicator">Chan. 1:<br /><span id="ds-1" class="scalars-num">0</span></div>
+            <div class="scalars-indicator">Chan. 2:<br /><span id="ds-2" class="scalars-num">0</span></div>
+            <div class="scalars-indicator">Chan. 3:<br /><span id="ds-3" class="scalars-num">0</span></div>
+            <div class="scalars-indicator">Coincidence:<br /><span id="ds-4" class="scalars-num">0</span></div>
+          </div>
+        </div>
+        <div class="shadow shadow-2dp trigger-box">
+          <div class="control-title">Triggers</div>
           <div class="channel-check-grid">
             <paper-checkbox checked id="ch0-trig">Channel 0</paper-checkbox>
             <paper-checkbox checked id="ch1-trig">Channel 1</paper-checkbox>
@@ -74,8 +85,8 @@
             <paper-checkbox checked id="ch3-trig">Channel 3</paper-checkbox>
           </div>
           <div class="dw-grid">
-            <paper-input always-float-label label="Gate width" id="gate-set"><div slot="suffix">ns</div></paper-input>
-            <paper-input always-float-label label="Pipeline delay"><div slot="suffix">ns</div></paper-input>
+            <paper-input always-float-label label="Gate width" id="gate-set" auto-validate allowed-pattern="[0-9]" value="100"><div slot="suffix">ns</div></paper-input>
+            <paper-input always-float-label label="Pipeline delay" auto-validate allowed-pattern="[0-9]" value="40"><div slot="suffix">ns</div></paper-input>
             <paper-dropdown-menu label="Coincidence">
               <paper-listbox slot="dropdown-content" selected="3">
                 <paper-item>1</paper-item>
@@ -98,10 +109,15 @@
       </div>
     </div>
 
-    <div class="analysis-contain" style="display: none;">
-      <paper-button id="trig-upd-button"><iron-icon icon="check-circle"></iron-icon></paper-button>
+    <div class="analysis-contain" style="display: hidden;">
+  		<div style="width:80%">
+  			<div>
+  				<canvas id="canvas" height="350" width="600"></canvas>
+  			</div>
+  		</div>
     </div>
   </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script type="text/javascript" src="cmd.js"></script>
   <script type="text/javascript" src="index.js"></script>

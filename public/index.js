@@ -1,4 +1,4 @@
-/* global io DAQControl */
+/* global io DAQControl Chart */
 
 var parser = document.createElement('a')
 parser.href = window.location.href
@@ -35,13 +35,60 @@ document.querySelector('#gate-set').onkeydown = (event) => {
   if (event.keyCode === 13 && (event.target.value !== undefined && event.target.value !== '')) gateWidthFieldCall()
 }
 
+// function gateWidthFieldCall () {
+//   brdcontrol.setGateWidth(document.querySelector('#gate-set').value)
+// }
+// document.querySelector('#trig-upd-button').onclick = gateWidthFieldCall
+// document.querySelector('#gate-set').onkeydown = (event) => {
+//   if (event.keyCode === 13 && (event.target.value !== undefined && event.target.value !== '')) gateWidthFieldCall()
+// }
+
 function showControls () {
   document.querySelector('.control-contain').setAttribute('style', '')
-  document.querySelector('.analysis-contain').setAttribute('style', 'display: none;')
+  document.querySelector('.analysis-contain').setAttribute('style', 'display: hidden;')
+  analysisShowing = false
 }
+var analysisShowing = false
+var analysisHasShown = false
+var dsChart
+var dsChartLine
 function showAnalysis () {
-  document.querySelector('.control-contain').setAttribute('style', 'display: none;')
+  if (!analysisHasShown) {
+    dsChart = new Chart(document.getElementById('canvas').getContext('2d'))
+    dsChartLine = dsChart.Line(lineChartData, {
+      animation: false
+    })
+    analysisHasShown = true
+  }
+  analysisShowing = true
+  document.querySelector('.control-contain').setAttribute('style', 'display: hidden;')
   document.querySelector('.analysis-contain').setAttribute('style', '')
 }
 document.querySelector('#controls-tab').onclick = showControls
 document.querySelector('#analysis-tab').onclick = showAnalysis
+
+// chartjs
+var lineChartData = {
+  labels: [],
+  datasets: [{
+    label: 'Coincidence rate',
+    fillColor: 'rgba(255,255,255,0)',
+    strokeColor: 'rgba(16,133,135,1)',
+    pointColor: 'rgba(16,133,135,1)',
+    pointStrokeColor: '#fff',
+    pointHighlightFill: '#fff',
+    pointHighlightStroke: 'rgba(16,133,135,1)',
+    data: []
+  }]
+
+}
+function addScalarData (hits) {
+  let dat = new Date()
+  lineChartData.labels.push(dat.getMinutes().toString())
+  lineChartData.datasets[0].data.push(hits.toString())
+  if (analysisShowing) {
+    dsChartLine = dsChart.Line(lineChartData, {
+      animation: false
+    })
+  }
+}

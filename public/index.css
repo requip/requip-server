@@ -100,3 +100,18 @@ paper-button.indigo:hover {
   margin-top: 9px;
   margin-bottom: 5px;
 }
+
+.scalars-grid{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 100%;
+  grid-column-gap: 5px;
+}
+.scalars-num {
+  font-family: 'Inconsolata', monospace;
+}
+.control-title {
+  font-size: small;
+  color: #7b7b7b;
+  margin-bottom: 5px;
+}
