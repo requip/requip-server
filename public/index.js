@@ -1,26 +1,25 @@
-/* global io */
+/* global io DAQControl */
+
 var parser = document.createElement('a')
 parser.href = window.location.href
 var socket = io(parser.host)
+var brdcontrol = new DAQControl(socket, logData)
+
 socket.on('connect', () => {
   console.log('socket.io connected!')
   socket.emit('connType', 'web-client')
+  brdcontrol.init()
 })
 
-socket.on('web-serial-recv', (data) => {
+function logData (data) {
   console.log('data recv')
   document.querySelector('.data-log pre').innerText += data
   var el = document.querySelector('.data-log')
   el.scrollTop = el.scrollHeight
-})
-
-function sendData (data) {
-  console.log('data send')
-  socket.emit('web-serial-send', data + '\r')
 }
 
 function cmdSendActivate () {
-  sendData(document.querySelector('.cmd-send paper-input').value)
+  brdcontrol.sendData(document.querySelector('.cmd-send paper-input').value + '\r')
   document.querySelector('.cmd-send paper-input').value = ''
 }
 document.querySelector('.cmd-send paper-button').onclick = cmdSendActivate
