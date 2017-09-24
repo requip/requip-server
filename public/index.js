@@ -55,13 +55,13 @@ var dsChartLine
 function showAnalysis () {
   if (!analysisHasShown) {
     dsChart = new Chart(document.getElementById('canvas').getContext('2d'))
-    dsChartLine = dsChart.Line(lineChartData, {
-      animation: false
-    })
     analysisHasShown = true
   }
+  dsChartLine = dsChart.Line(lineChartData, {
+    animation: false
+  })
   analysisShowing = true
-  document.querySelector('.control-contain').setAttribute('style', 'display: hidden;')
+  document.querySelector('.control-contain').setAttribute('style', 'display: none;')
   document.querySelector('.analysis-contain').setAttribute('style', '')
 }
 document.querySelector('#controls-tab').onclick = showControls
