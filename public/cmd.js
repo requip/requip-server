@@ -1,8 +1,6 @@
 // This class is *only* for DAQ stuff, do not include any non DAQ calls in here
 const initSteps = ['H1', 'H2', 'DG', 'DC', 'DS', 'DT', 'BA', 'TH', 'TI', 'V1', 'V2', 'ST 3 5']
-const cmdReturnLen = {
-  'H1': 20
-}
+const cmdReturnLen = { 'H1': 20, 'H2': 33, 'DG': 9, 'DC': 1, 'DS': 1, 'DT': 1, 'BA': 3, 'TH': 1, 'TI': 1, 'V1': 32, 'V2': 18, 'ST 3 5': 1 }
 
 class DAQControl {
   constructor (socket, dataLogCallback) {
@@ -22,6 +20,9 @@ class DAQControl {
     this.socket.on('web-serial-recv', this.handleData.bind(this))
     // init sequence from crmd manual sans SA 1 - page 22
     // this.sendData('H1\rH2\rDG\rDC\rDS\rDT\rBA\rTH\rTI\rV1\rV2\rST 3 5\r')
+    this.initIncrement()
+  }
+  initIncrement () {
     this.sendData(initSteps[this.initStep] + '\r')
   }
   sendData (data) {
@@ -37,30 +38,23 @@ class DAQControl {
     } else {
       existNewlines = this.rawSettings[initSteps[this.initStep]].split('\r').length - 1
     }
-    console.log('existNewlines:')
-    console.log(existNewlines)
 
     if (existNewlines < cmdReturnLen[initSteps[this.initStep]]) {
       let a = data.split('\r')
-      let dataNewlines = a.length - 1
-      let linesNeeded = cmdReturnLen[initSteps[this.initStep]] - dataNewlines
-      console.log('linesNeeded:')
-      console.log(linesNeeded)
-      console.log('a:')
-      console.log(a)
+      let linesNeeded = cmdReturnLen[initSteps[this.initStep]] - existNewlines
       for (var i = 0; i < a.length; i++) {
-        console.log('i:')
-        console.log(i)
         let nstr = a[i].replace(/\n/g, '\r')
         this.rawSettings[initSteps[this.initStep]] += nstr
-        if (i === linesNeeded) break
+        if (i === linesNeeded) {
+          this.initStep += 1
+          if (this.initStep < initSteps.length) this.initIncrement()
+          break
+        }
       }
     } else {
       this.initStep += 1
-      console.log('initStep incremented')
+      if (this.initStep < initSteps.length) this.initIncrement()
     }
-    console.log('Data processing done')
-    // this.rawSettings[initSteps[this.initStep]] += data
 
     this.dataLogCallback(data)
   }
