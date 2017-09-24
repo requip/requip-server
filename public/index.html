@@ -17,6 +17,9 @@
   <link rel="import" href="paper-styles/color.html">
   <link rel="import" href="paper-input/paper-input.html">
   <link rel="import" href="paper-button/paper-button.html">
+  <link rel="import" href="paper-checkbox/paper-checkbox.html">
+  <link rel="import" href="paper-item/paper-item.html">
+  <link rel="import" href="paper-dropdown-menu/paper-dropdown-menu.html">
   <!-- load css -->
   <link rel="stylesheet" type="text/css" href="index.css" />
   <link rel="stylesheet" type="text/css" href="normalize.css" />
@@ -46,8 +49,8 @@
       <paper-icon-button icon="help-outline"></paper-icon-button>
     </app-toolbar>
     <paper-tabs selected="0" scrollable>
-      <paper-tab>Controls</paper-tab>
-      <paper-tab>Analysis</paper-tab>
+      <paper-tab id="controls-tab">Controls</paper-tab>
+      <paper-tab id="analysis-tab">Analysis</paper-tab>
     </paper-tabs>
   </app-header>
   <!-- <app-drawer id="drawer" swipe-open>
@@ -63,7 +66,28 @@
   <div class="m-contain">
     <div class="control-contain">
       <div class="col">
-        <div class="cmd-send">
+        <div class="shadow shadow-2dp trigger-box">
+          <div class="channel-check-grid">
+            <paper-checkbox checked id="ch0-trig">Channel 0</paper-checkbox>
+            <paper-checkbox checked id="ch1-trig">Channel 1</paper-checkbox>
+            <paper-checkbox checked id="ch2-trig">Channel 2</paper-checkbox>
+            <paper-checkbox checked id="ch3-trig">Channel 3</paper-checkbox>
+          </div>
+          <div class="dw-grid">
+            <paper-input always-float-label label="Gate width" id="gate-set"><div slot="suffix">ns</div></paper-input>
+            <paper-input always-float-label label="Pipeline delay"><div slot="suffix">ns</div></paper-input>
+            <paper-dropdown-menu label="Coincidence">
+              <paper-listbox slot="dropdown-content" selected="3">
+                <paper-item>1</paper-item>
+                <paper-item>2</paper-item>
+                <paper-item>3</paper-item>
+                <paper-item>4</paper-item>
+              </paper-listbox>
+            </paper-dropdown-menu>
+            <paper-button id="trig-upd-button"><iron-icon icon="check-circle"></iron-icon></paper-button>
+          </div>
+        </div>
+        <div class="cmd-send shadow shadow-2dp">
           <paper-input always-float-label label="Send command" class="uppercase2"></paper-input>
           <paper-button raised class="indigo"><iron-icon icon="send"></iron-icon></paper-button>
         </div>
@@ -72,6 +96,10 @@
       <div class="col shadow shadow-2dp">
         <div class="data-log"><pre></pre></div>
       </div>
+    </div>
+
+    <div class="analysis-contain" style="display: none;">
+      <paper-button id="trig-upd-button"><iron-icon icon="check-circle"></iron-icon></paper-button>
     </div>
   </div>
   <script src="/socket.io/socket.io.js"></script>

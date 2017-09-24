@@ -1,4 +1,6 @@
 // This class is *only* for DAQ stuff, do not include any non DAQ calls in here
+
+// init sequence from crmd manual sans SA 1 - page 22
 const initSteps = ['H1', 'H2', 'DG', 'DC', 'DS', 'DT', 'BA', 'TH', 'TI', 'V1', 'V2', 'ST 3 5']
 const cmdReturnLen = { 'H1': 20, 'H2': 33, 'DG': 9, 'DC': 1, 'DS': 1, 'DT': 1, 'BA': 3, 'TH': 1, 'TI': 1, 'V1': 32, 'V2': 18, 'ST 3 5': 1 }
 
@@ -18,9 +20,7 @@ class DAQControl {
   }
   init () {
     this.socket.on('web-serial-recv', this.handleData.bind(this))
-    // init sequence from crmd manual sans SA 1 - page 22
-    // this.sendData('H1\rH2\rDG\rDC\rDS\rDT\rBA\rTH\rTI\rV1\rV2\rST 3 5\r')
-    this.initIncrement()
+    // this.initIncrement()
   }
   initIncrement () {
     this.sendData(initSteps[this.initStep] + '\r')
@@ -62,5 +62,9 @@ class DAQControl {
     if (ns > 655350) throw new Error('Gate width too large')
     let hex = ('0000' + (ns / 10).toString(16).toUpperCase()).slice(-4)
     this.sendData('WC 02 ' + hex.substring(2, 4) + '\rWC 03 ' + hex.substring(0, 2) + '\r')
+  }
+  setCoincidenceToggleDetectors (coincidence, d0, d1, d2, d3) {
+    let toggle = parseInt(('' + (d0 ? 1 : 0) + (d1 ? 1 : 0) + (d2 ? 1 : 0) + (d3 ? 1 : 0)), 2).toString(16).toUpperCase()
+    this.sendData('WC 00 ' + coincidence + toggle + '\r')
   }
 }

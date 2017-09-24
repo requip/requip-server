@@ -64,6 +64,8 @@ paper-button.indigo:hover {
 }
 .cmd-send {
   display: flex;
+  padding: 5px;
+  border-radius: 2px;
 }
 .cmd-send paper-input {
   width: 100%;
@@ -71,4 +73,30 @@ paper-button.indigo:hover {
 .cmd-send paper-button {
   height: 100%;
   margin-top: 7px;
+}
+
+.trigger-box {
+  padding: 5px;
+  margin-bottom: 10px;
+  border-radius: 2px;
+}
+.channel-check-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 100%;
+  /*grid-column-gap: 10px;*/
+}
+.dw-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 100%;
+  /*grid-column-gap: 10px;*/
+}
+.dw-grid paper-input {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.dw-grid paper-button {
+  margin-top: 9px;
+  margin-bottom: 5px;
 }
