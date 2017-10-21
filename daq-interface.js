@@ -5,26 +5,19 @@ const initSteps = ['H1', 'H2', 'DG', 'DC', 'DS', 'DT', 'BA', 'TH', 'TI', 'V1', '
 const cmdReturnLen = { 'H1': 20, 'H2': 33, 'DG': 9, 'DC': 1, 'DS': 1, 'DT': 1, 'BA': 3, 'TH': 1, 'TI': 1, 'V1': 32, 'V2': 18, 'ST 3 5': 1 }
 
 class DAQControl {
-  constructor (socket, dataLogCallback) {
-    this.socket = socket
+  constructor (fromBoard) {
     // raw data log
     this.dataLog = ''
     // latest unparsed sections
     this.rawSettings = {}
     // parsed settings
     this.brdSettings = {}
-    // dom data log
-    this.dataLogCallback = dataLogCallback
     // init step
     this.initStep = 0
     // last sent cmd - hackkkk
     this.lastSent = ''
     this.charsNeeded = 0
     this.lastDS = ''
-  }
-  init () {
-    this.socket.on('web-serial-recv', this.handleData.bind(this))
-    // this.initIncrement()
   }
   initIncrement () {
     this.sendData(initSteps[this.initStep] + '\r')
@@ -33,6 +26,7 @@ class DAQControl {
     this.lastSent = data.toUpperCase()
     this.socket.emit('web-serial-send', data)
   }
+  // internal data handling
   handleData (data) {
     this.dataLog += data
     // number of carriage returns (\r) in saved data
@@ -123,3 +117,5 @@ class DAQControl {
     this.sendData('WT 01 00\rWT 02 ' + hex + '\r')
   }
 }
+
+exports.DAQControl = DAQControl

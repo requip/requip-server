@@ -1,7 +1,10 @@
+// initiate web server
 const express = require('express')
 const app = express()
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
+// include DAQControl
+const { DAQControl } = require('./daq-interface.js')
 
 var port = 8080
 server.listen(port)
