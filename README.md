@@ -11,7 +11,7 @@
     * Simple client association system (DAQ serial no. based?)
         * "hit RE button on detector to verify that it's yours" or something
 * State management
-    * redux or something - allow for instant resuming of the web interface state in event of a browser disconnet
+    * redux or something - allow for instant resuming of the web interface state in event of a browser disconnect
 * Detector profile management
     * have profiles for detector setups basically
 * More friendly UI (friendly interface for confusing operations)
